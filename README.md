@@ -4,7 +4,7 @@ A simple, offline-capable web app for logging meals and physical activity, track
 
 Built with plain HTML, CSS and JavaScript — no frameworks, no build step, no server. Hosted on GitHub Pages and installable on Android as a home-screen app.
 
-**Live app:** https://<your-username>.github.io/<your-repo>/
+**Live app:** https://github.com/nobleson-phy/calorie-activity-tracker
 
 ## Features
 
