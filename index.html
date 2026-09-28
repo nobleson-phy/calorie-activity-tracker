@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FitTrack</title>
+<meta name="description" content="Offline-first calorie and activity tracker">
+<meta name="theme-color" content="#16a34a">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FitTrack">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div id="app">
+  <div id="reminderBanner">
+    <div class="rb-text" id="reminderText"></div>
+    <button id="reminderActionBtn">Log it</button>
+    <button class="dismiss" id="reminderDismissBtn">&times;</button>
+  </div>
+
+  <header class="topbar">
+    <h1>FitTrack</h1>
+    <button id="installBtn">Install app</button>
+  </header>
+
+  <main id="view"></main>
+
+  <nav class="tabbar">
+    <button data-tab="today" class="tab-btn"><span class="icon">&#127869;</span>Today</button>
+    <button data-tab="history" class="tab-btn"><span class="icon">&#128202;</span>History</button>
+    <button data-tab="profile" class="tab-btn"><span class="icon">&#128100;</span>Profile</button>
+  </nav>
+
+  <div id="sheetRoot"></div>
+</div>
+
+<script src="./foods.js"></script>
+<script src="./activities.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
