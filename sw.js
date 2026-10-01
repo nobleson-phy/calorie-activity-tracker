@@ -1,6 +1,6 @@
 // FitTrack service worker - cache-first, offline-capable.
 // Bump CACHE_VERSION whenever any app file changes so clients pick up the update.
-const CACHE_VERSION = "fittrack-v1-b";
+const CACHE_VERSION = "fittrack-v2";
 const CACHE_NAME = CACHE_VERSION;
 
 // Paths are relative so this works when hosted at https://<user>.github.io/<repo>/

@@ -493,6 +493,13 @@
   }
 
   // ---------- Add food sheet ----------
+  const FOOD_CHIPS = [
+    ["all", "All"], ["mine", "My foods"], ["indian", "Indian"], ["japanese", "Japanese"],
+    ["general", "General"], ["drinks", "Drinks"], ["alcohol", "Alcohol"], ["fruits", "Fruits"], ["snacks", "Snacks"],
+  ];
+  let lastFoodChip = "all"; // remembered for the session
+  BUILTIN_FOODS.forEach((f) => { f._q = f.name.toLowerCase(); });
+
   function openAddFoodSheet(mealKey) {
     openSheet(`
       <div class="sheet-title">Add to ${mealKey.charAt(0).toUpperCase() + mealKey.slice(1)}</div>
@@ -508,18 +515,23 @@
       document.getElementById("tab-custom").classList.remove("active");
       document.getElementById("sheetBody").innerHTML = `
         <input type="search" id="foodSearch" placeholder="Search foods (e.g. roti, ramen, egg)...">
+        <div class="chip-row" id="chipRow">
+          ${FOOD_CHIPS.map(([k, label]) => `<button type="button" class="chip${k === lastFoodChip ? " active" : ""}" data-chip="${k}">${label}</button>`).join("")}
+        </div>
         <div class="food-list" id="foodList"></div>
       `;
       const listEl = document.getElementById("foodList");
       const searchEl = document.getElementById("foodSearch");
+      const chipRow = document.getElementById("chipRow");
 
-      function doSearch(q) {
-        const query = q.trim().toLowerCase();
-        const mine = myFoods.filter((f) => !query || f.name.toLowerCase().includes(query));
-        const built = BUILTIN_FOODS.filter((f) => !query || f.name.toLowerCase().includes(query));
-        const combined = [...mine.map((f) => ({ ...f, mine: true })), ...built];
-        const limited = combined.slice(0, 60);
-        listEl.innerHTML = limited.length ? limited.map((f) => `
+      function doSearch() {
+        const query = searchEl.value.trim().toLowerCase();
+        const chip = lastFoodChip;
+        const match = (f) => !query || (f._q || f.name.toLowerCase()).includes(query);
+        const mine = chip === "all" || chip === "mine" ? myFoods.filter(match).map((f) => ({ ...f, mine: true })) : [];
+        const built = chip === "mine" ? [] : BUILTIN_FOODS.filter((f) => (chip === "all" || f.cat === chip) && match(f));
+        const combined = mine.concat(built);
+        listEl.innerHTML = combined.length ? combined.map((f) => `
           <div class="food-item">
             <div>
               <div class="fname">${escapeHtml(f.name)}${f.mine ? " ★" : ""}</div>
@@ -527,18 +539,25 @@
             </div>
             <button class="pick-btn" data-id="${f.id}" data-mine="${f.mine ? "1" : "0"}">Add</button>
           </div>
-        `).join("") : `<div class="empty-state">No foods found</div>`;
-
-        listEl.querySelectorAll(".pick-btn").forEach((btn) => {
-          btn.addEventListener("click", () => {
-            const source = btn.dataset.mine === "1" ? myFoods : BUILTIN_FOODS;
-            const food = source.find((f) => f.id === btn.dataset.id);
-            openQtySheet(mealKey, food);
-          });
-        });
+        `).join("") : `<div class="empty-state">${chip === "mine" && !myFoods.length ? "No saved foods yet" : "No foods found"}</div>`;
+        listEl.scrollTop = 0;
       }
-      doSearch("");
-      searchEl.addEventListener("input", () => doSearch(searchEl.value));
+      listEl.addEventListener("click", (e) => {
+        const btn = e.target.closest(".pick-btn");
+        if (!btn) return;
+        const source = btn.dataset.mine === "1" ? myFoods : BUILTIN_FOODS;
+        const food = source.find((f) => f.id === btn.dataset.id);
+        if (food) openQtySheet(mealKey, food);
+      });
+      chipRow.addEventListener("click", (e) => {
+        const c = e.target.closest(".chip");
+        if (!c) return;
+        lastFoodChip = c.dataset.chip;
+        chipRow.querySelectorAll(".chip").forEach((el) => el.classList.toggle("active", el === c));
+        doSearch();
+      });
+      doSearch();
+      searchEl.addEventListener("input", doSearch);
     }
 
     function showCustom() {

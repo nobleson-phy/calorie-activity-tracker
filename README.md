@@ -4,12 +4,12 @@ A simple, offline-capable web app for logging meals and physical activity, track
 
 Built with plain HTML, CSS and JavaScript — no frameworks, no build step, no server. Hosted on GitHub Pages and installable on Android as a home-screen app.
 
-**Live app:** https://github.com/nobleson-phy/calorie-activity-tracker
+**Live app:** https://<your-username>.github.io/<your-repo>/
 
 ## Features
 
 - **Goal setup** — enter sex, age, height, current weight, goal weight and a weekly loss rate (0.25–1 kg/week). The app calculates your daily calorie target and a projected goal date.
-- **Meal logging** — breakfast, lunch, dinner and snacks. Choose from ~100 built-in foods (Indian, Japanese and everyday Western dishes) or add your own with custom calories.
+- **Meal logging** — breakfast, lunch, dinner and snacks. Choose from ~250 built-in foods — Indian, Japanese and everyday Western dishes, plus drinks, alcohol & cocktails, Indian & Japanese fruits and packaged snacks — and filter the list by category (All, My foods, Indian, Japanese, General, Drinks, Alcohol, Fruits, Snacks) alongside search. Or add your own with custom calories.
 - **Activity logging** — walking, brisk walking, jogging, running, cycling, swimming, yoga, badminton, cricket, gym and more. Enter minutes, distance (km) or steps.
 - **Activity needed today** — shows how many km of walking, brisk walking, jogging *or* running (each an alternative) would keep you on track, with approximate minutes and steps.
 - **Meal reminders** — prompts you to log a meal if its usual time has passed and nothing is logged.
